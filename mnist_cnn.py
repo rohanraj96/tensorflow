@@ -35,13 +35,10 @@ b_conv2=bias_variable([64])
 h_conv2=tf.nn.relu(conv2d(h_pool1,W_conv2)+b_conv2)
 h_pool2=max_pool_2x2(h_conv2)
 # FULLY-CONNECTED LAYER
-W_fc1=weight_variable([7*7*64,1024])
-b_fc1=bias_variable([1024])
+W_fc1=weight_variable([7*7*64,10])
+b_fc1=bias_variable([10])
 h_pool2_flat = tf.reshape(h_pool2, [-1, 7*7*64])
-h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
-W_fc2 = weight_variable([1024, 10])
-b_fc2 = bias_variable([10])
-y_conv = tf.matmul(h_fc1, W_fc2) + b_fc2
+y_conv = tf.matmul(h_pool2_flat, W_fc1) + b_fc1
 # TRAINING
 cross_entropy = tf.reduce_mean(
     tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=y_conv))
